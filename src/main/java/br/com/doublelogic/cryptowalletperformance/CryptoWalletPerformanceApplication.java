@@ -23,6 +23,7 @@ public class CryptoWalletPerformanceApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
+			System.out.println(coincapAPI.getAsset("ETH").get());
 			System.out.println(coincapAPI.getAssetHistory("bitcoin").get().getPriceUsd());
 		};
 	}
