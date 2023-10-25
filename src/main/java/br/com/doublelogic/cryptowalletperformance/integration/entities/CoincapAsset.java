@@ -3,7 +3,7 @@ package br.com.doublelogic.cryptowalletperformance.integration.entities;
 import lombok.Getter;
 import lombok.Setter;
 
-public class AssetEntity {
+public class CoincapAsset {
 
     @Getter
     @Setter

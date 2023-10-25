@@ -5,11 +5,11 @@ import lombok.Setter;
 
 import java.util.List;
 
-public class AssetData {
+public class CoincapAssetData {
 
     @Getter
     @Setter
-    private List<AssetEntity> data;
+    private List<CoincapAsset> data;
 
     @Getter
     @Setter

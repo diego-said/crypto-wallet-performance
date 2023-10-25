@@ -1,9 +1,9 @@
 package br.com.doublelogic.cryptowalletperformance.integration;
 
-import br.com.doublelogic.cryptowalletperformance.integration.entities.AssetData;
-import br.com.doublelogic.cryptowalletperformance.integration.entities.AssetEntity;
-import br.com.doublelogic.cryptowalletperformance.integration.entities.AssetHistoryData;
-import br.com.doublelogic.cryptowalletperformance.integration.entities.AssetHistoryEntity;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetData;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAsset;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetHistoryData;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetHistory;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Call;
@@ -39,20 +39,20 @@ public class CoincapAPI {
     @Value(value = "${coincap.api.end}")
     private String historyEnd;
 
-    public Optional<AssetEntity> getAsset(String symbol) {
+    public Optional<CoincapAsset> getAsset(String symbol) {
         Response response = requestAsset(symbol);
         if(response.code() == HttpURLConnection.HTTP_OK) {
-            Optional<AssetData> assetData = convertAssetResponseBody(response.body());
+            Optional<CoincapAssetData> assetData = convertAssetResponseBody(response.body());
             if(assetData.isPresent())
                 return assetData.get().getData().stream().filter(assetEntity -> symbol.equals(assetEntity.getSymbol())).findFirst();
         }
         return Optional.empty();
     }
 
-    public Optional<AssetHistoryEntity> getAssetHistory(String assetId) {
+    public Optional<CoincapAssetHistory> getAssetHistory(String assetId) {
         Response response = requestAssetHistory(assetId);
         if(response.code() == HttpURLConnection.HTTP_OK) {
-            Optional<AssetHistoryData> assetHistoryData = convertAssetHistoryResponseBody(response.body());
+            Optional<CoincapAssetHistoryData> assetHistoryData = convertAssetHistoryResponseBody(response.body());
             if(assetHistoryData.isPresent() && assetHistoryData.get().getData().size() > 0) {
                 return Optional.ofNullable(assetHistoryData.get().getData().get(0));
             }
@@ -98,21 +98,21 @@ public class CoincapAPI {
         }
     }
 
-    private Optional<AssetData> convertAssetResponseBody(ResponseBody responseBody) {
+    private Optional<CoincapAssetData> convertAssetResponseBody(ResponseBody responseBody) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         try {
-            AssetData assetData = objectMapper.readValue(responseBody.string(), AssetData.class);
+            CoincapAssetData assetData = objectMapper.readValue(responseBody.string(), CoincapAssetData.class);
             return Optional.ofNullable(assetData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private Optional<AssetHistoryData> convertAssetHistoryResponseBody(ResponseBody responseBody) {
+    private Optional<CoincapAssetHistoryData> convertAssetHistoryResponseBody(ResponseBody responseBody) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            AssetHistoryData assetHistoryData = objectMapper.readValue(responseBody.string(), AssetHistoryData.class);
+            CoincapAssetHistoryData assetHistoryData = objectMapper.readValue(responseBody.string(), CoincapAssetHistoryData.class);
             return Optional.ofNullable(assetHistoryData);
         } catch (IOException e) {
             throw new RuntimeException(e);
