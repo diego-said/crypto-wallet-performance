@@ -21,6 +21,7 @@ public class Wallet {
     @Getter
     private Asset worstAsset;
 
+    @Getter
     private List<Asset> assetList = new ArrayList<>();
 
     public void addAsset(Asset asset) {

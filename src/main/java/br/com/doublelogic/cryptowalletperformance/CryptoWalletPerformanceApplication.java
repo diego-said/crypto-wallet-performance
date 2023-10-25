@@ -1,5 +1,6 @@
 package br.com.doublelogic.cryptowalletperformance;
 
+import br.com.doublelogic.cryptowalletperformance.core.WalletProcessor;
 import br.com.doublelogic.cryptowalletperformance.core.WalletReader;
 import br.com.doublelogic.cryptowalletperformance.core.entities.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 public class CryptoWalletPerformanceApplication {
 
 	@Autowired
-	private WalletReader walletReader;
+	private WalletProcessor walletProcessor;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CryptoWalletPerformanceApplication.class, args);
@@ -22,8 +23,8 @@ public class CryptoWalletPerformanceApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-			Wallet wallet = walletReader.read();
-			System.out.println(wallet.getAssetListSize());
+			Wallet wallet = walletProcessor.process();
+			System.out.println(wallet);
 		};
 	}
 
