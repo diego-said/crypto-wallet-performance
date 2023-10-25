@@ -1,7 +1,6 @@
 package br.com.doublelogic.cryptowalletperformance;
 
 import br.com.doublelogic.cryptowalletperformance.core.WalletProcessor;
-import br.com.doublelogic.cryptowalletperformance.core.WalletReader;
 import br.com.doublelogic.cryptowalletperformance.core.entities.Wallet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

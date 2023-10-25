@@ -60,11 +60,18 @@ public class Asset {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Asset asset = (Asset) o;
-        return Objects.equals(id, asset.id);
+        return Objects.equals(symbol, asset.symbol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(symbol);
+    }
+
+    @Override
+    public String toString() {
+        return "Asset{" +
+                "symbol='" + symbol + '\'' +
+                '}';
     }
 }

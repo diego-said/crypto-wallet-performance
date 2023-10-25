@@ -1,9 +1,9 @@
 package br.com.doublelogic.cryptowalletperformance.integration;
 
-import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetData;
 import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAsset;
-import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetHistoryData;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetData;
 import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetHistory;
+import br.com.doublelogic.cryptowalletperformance.integration.entities.CoincapAssetHistoryData;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Call;
@@ -13,6 +13,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,8 @@ import java.util.concurrent.TimeUnit;
 
 @Service
 public class CoincapAPI {
+
+    private static final Logger logger = LoggerFactory.getLogger(CoincapAPI.class);
 
     @Value(value = "${coincap.api.base.url}")
     private String baseURL;
@@ -40,7 +44,9 @@ public class CoincapAPI {
     private String historyEnd;
 
     public Optional<CoincapAsset> getAsset(String symbol) {
+        logger.info("Submitted request to get asset identified by symbol [" + symbol +"]");
         Response response = requestAsset(symbol);
+        logger.info("Asset [" + symbol +"] status: " + response.code());
         if(response.code() == HttpURLConnection.HTTP_OK) {
             Optional<CoincapAssetData> assetData = convertAssetResponseBody(response.body());
             if(assetData.isPresent())
@@ -50,7 +56,9 @@ public class CoincapAPI {
     }
 
     public Optional<CoincapAssetHistory> getAssetHistory(String assetId) {
+        logger.info("Submitted request to get price for asset [" + assetId +"]");
         Response response = requestAssetHistory(assetId);
+        logger.info("Asset [" + assetId +"] status: " + response.code());
         if(response.code() == HttpURLConnection.HTTP_OK) {
             Optional<CoincapAssetHistoryData> assetHistoryData = convertAssetHistoryResponseBody(response.body());
             if(assetHistoryData.isPresent() && assetHistoryData.get().getData().size() > 0) {
@@ -94,6 +102,7 @@ public class CoincapAPI {
         try {
             return call.execute();
         } catch (IOException e) {
+            logger.error("Failed to execute call for url: " + urlBuilder.build(), e);
             throw new RuntimeException(e);
         }
     }
@@ -105,6 +114,7 @@ public class CoincapAPI {
             CoincapAssetData assetData = objectMapper.readValue(responseBody.string(), CoincapAssetData.class);
             return Optional.ofNullable(assetData);
         } catch (IOException e) {
+            logger.error("Failed to convert asset", e);
             throw new RuntimeException(e);
         }
     }
@@ -115,6 +125,7 @@ public class CoincapAPI {
             CoincapAssetHistoryData assetHistoryData = objectMapper.readValue(responseBody.string(), CoincapAssetHistoryData.class);
             return Optional.ofNullable(assetHistoryData);
         } catch (IOException e) {
+            logger.error("Failed to convert asset history", e);
             throw new RuntimeException(e);
         }
     }
