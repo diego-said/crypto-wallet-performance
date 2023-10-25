@@ -18,7 +18,7 @@ public class CryptoWalletPerformanceApplication {
 		SpringApplication.run(CryptoWalletPerformanceApplication.class, args);
 	}
 
-	@Bean
+	//@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
 			var records = csvReader.readRecords();
