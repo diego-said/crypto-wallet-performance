@@ -40,7 +40,7 @@ public class WalletProcessor {
         if (!wallet.getAssetList().isEmpty() && assetProcessors > 0) {
             final List<Asset> assetListToBeRemoved = Collections.synchronizedList(new ArrayList<>(wallet.getAssetListSize()));
             final BlockingQueue<Asset> queue = new ArrayBlockingQueue<>(bufferSize);
-            final AtomicInteger processorCounter = new AtomicInteger();
+            final AtomicInteger processorCounter = new AtomicInteger(assetProcessors);
 
             createAssetProcessors(queue, processorCounter, assetListToBeRemoved);
 
@@ -54,7 +54,7 @@ public class WalletProcessor {
 
             destroyAssetProcessors(queue);
 
-            while (processorCounter.get() != assetProcessors) {
+            while (processorCounter.get() != 0) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {

@@ -36,7 +36,7 @@ public class AssetProcessor implements Runnable {
             while (true) {
                 Asset asset = queue.take();
                 if (POISON_SYMBOL.equals(asset.getSymbol())) {
-                    processorCounter.getAndIncrement();
+                    processorCounter.getAndDecrement();
                     break;
                 }
 
