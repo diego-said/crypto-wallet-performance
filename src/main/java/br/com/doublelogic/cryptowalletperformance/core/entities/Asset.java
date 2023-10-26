@@ -38,7 +38,7 @@ public class Asset {
     private Double performance;
 
     public Double getCurrentPosition() {
-        if(currentPosition == null) {
+        if (currentPosition == null) {
             BigDecimal bigQuantity = BigDecimal.valueOf(quantity);
             BigDecimal bigPrice = BigDecimal.valueOf(price);
             currentPosition = bigQuantity.multiply(bigPrice).doubleValue();
@@ -47,7 +47,7 @@ public class Asset {
     }
 
     public Double getPerformance() {
-        if(performance == null) {
+        if (performance == null) {
             BigDecimal bigOriginalPrice = BigDecimal.valueOf(originalPrice);
             BigDecimal bigPrice = BigDecimal.valueOf(price);
             performance = bigPrice.divide(bigOriginalPrice, 2, RoundingMode.HALF_UP).doubleValue();

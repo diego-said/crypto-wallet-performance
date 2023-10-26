@@ -11,19 +11,19 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class CryptoWalletPerformanceApplication {
 
-	@Autowired
-	private WalletProcessor walletProcessor;
+    @Autowired
+    private WalletProcessor walletProcessor;
 
-	public static void main(String[] args) {
-		SpringApplication.run(CryptoWalletPerformanceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(CryptoWalletPerformanceApplication.class, args);
+    }
 
-	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return args -> {
-			Wallet wallet = walletProcessor.process();
-			System.out.println(wallet);
-		};
-	}
+    @Bean
+    public CommandLineRunner commandLineRunner() {
+        return args -> {
+            Wallet wallet = walletProcessor.process();
+            System.out.println(wallet);
+        };
+    }
 
 }

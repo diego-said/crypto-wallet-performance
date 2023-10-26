@@ -26,7 +26,7 @@ public class WalletReader {
         final Wallet wallet = new Wallet();
         logger.info("Starting - reading wallet");
         var records = csvReader.readRecords();
-        if(records.size() > CSV_JUST_WITH_HEADER_VALUE) {
+        if (records.size() > CSV_JUST_WITH_HEADER_VALUE) {
             records.stream().skip(1).forEach(columns -> {
                 Asset asset = new Asset();
                 asset.setSymbol(columns.get(SYMBOL_INDEX));

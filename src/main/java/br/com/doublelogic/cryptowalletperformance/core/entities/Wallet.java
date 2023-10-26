@@ -22,7 +22,7 @@ public class Wallet {
     private Asset worstAsset;
 
     @Getter
-    private List<Asset> assetList = new ArrayList<>();
+    private final List<Asset> assetList = new ArrayList<>();
 
     public void addAsset(Asset asset) {
         assetList.add(asset);
@@ -43,8 +43,8 @@ public class Wallet {
     }
 
     private void findBestAsset(Asset asset) {
-        if(bestAsset != null) {
-            if(Double.compare(bestAsset.getPerformance(), asset.getPerformance()) <= 0) {
+        if (bestAsset != null) {
+            if (Double.compare(bestAsset.getPerformance(), asset.getPerformance()) <= 0) {
                 bestAsset = asset;
             }
         } else {
@@ -53,8 +53,8 @@ public class Wallet {
     }
 
     private void findWorstAsset(Asset asset) {
-        if(worstAsset != null) {
-            if(Double.compare(worstAsset.getPerformance(), asset.getPerformance()) >= 0) {
+        if (worstAsset != null) {
+            if (Double.compare(worstAsset.getPerformance(), asset.getPerformance()) >= 0) {
                 worstAsset = asset;
             }
         } else {

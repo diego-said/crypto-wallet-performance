@@ -40,7 +40,7 @@ public class AssetProcessor implements Runnable {
                     break;
                 }
 
-                var coincapAsset =  coincapAPI.getAsset(asset.getSymbol());
+                var coincapAsset = coincapAPI.getAsset(asset.getSymbol());
                 if (coincapAsset.isPresent()) {
                     asset.setId(coincapAsset.get().getId());
                     asset.setName(coincapAsset.get().getName());
