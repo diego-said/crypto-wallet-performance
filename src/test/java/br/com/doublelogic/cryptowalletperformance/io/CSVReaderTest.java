@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@SpringBootTest
+@SpringBootTest(classes = CSVReader.class)
 public class CSVReaderTest {
 
     @Autowired
@@ -71,9 +71,7 @@ public class CSVReaderTest {
     @Test
     void testReadRecordsWithInvalidFileName() {
         reader.setFileName("not_a_csv_file");
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            reader.readRecords();
-        });
+        Assertions.assertThrows(RuntimeException.class, () -> reader.readRecords());
     }
 
 }

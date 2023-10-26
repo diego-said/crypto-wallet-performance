@@ -2,6 +2,7 @@ package br.com.doublelogic.cryptowalletperformance.core;
 
 import br.com.doublelogic.cryptowalletperformance.core.entities.Asset;
 import br.com.doublelogic.cryptowalletperformance.core.entities.Wallet;
+import br.com.doublelogic.cryptowalletperformance.integration.CoincapAPI;
 import br.com.doublelogic.cryptowalletperformance.io.CSVReader;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = {WalletProcessor.class, CSVReader.class, WalletReader.class, CoincapAPI.class})
 public class WalletProcessorTest {
 
     @Autowired
@@ -76,9 +77,7 @@ public class WalletProcessorTest {
     void testReadWithInvalidFileName() {
         csvReader.setFileName("not_a_csv_file");
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            walletProcessor.process();
-        });
+        Assertions.assertThrows(RuntimeException.class, () -> walletProcessor.process());
     }
 
 }

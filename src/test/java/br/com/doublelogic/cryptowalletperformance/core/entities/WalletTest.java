@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-@SpringBootTest
+@SpringBootTest(classes = Wallet.class)
 public class WalletTest {
 
     private Wallet wallet;

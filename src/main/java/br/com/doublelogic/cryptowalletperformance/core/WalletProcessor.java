@@ -22,8 +22,8 @@ public class WalletProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(WalletProcessor.class);
 
-    @Value(value = "${crypto.wallet.asset.buffer.size}")
-    private int bufferSize;
+    @Value(value = "${crypto.wallet.asset.queue.size}")
+    private int queueSize;
 
     @Value(value = "${crypto.wallet.asset.processors}")
     private int assetProcessors;
@@ -39,7 +39,7 @@ public class WalletProcessor {
         final var wallet = walletReader.read();
         if (!wallet.getAssetList().isEmpty() && assetProcessors > 0) {
             final List<Asset> assetListToBeRemoved = Collections.synchronizedList(new ArrayList<>(wallet.getAssetListSize()));
-            final BlockingQueue<Asset> queue = new ArrayBlockingQueue<>(bufferSize);
+            final BlockingQueue<Asset> queue = new ArrayBlockingQueue<>(queueSize);
             final AtomicInteger processorCounter = new AtomicInteger(assetProcessors);
 
             createAssetProcessors(queue, processorCounter, assetListToBeRemoved);

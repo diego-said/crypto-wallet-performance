@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = {CSVReader.class, WalletReader.class})
 public class WalletReaderTest {
 
     @Autowired
@@ -54,9 +54,7 @@ public class WalletReaderTest {
     void testReadWithInvalidFileName() {
         csvReader.setFileName("not_a_csv_file");
 
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            walletReader.read();
-        });
+        Assertions.assertThrows(RuntimeException.class, () -> walletReader.read());
     }
 
 }

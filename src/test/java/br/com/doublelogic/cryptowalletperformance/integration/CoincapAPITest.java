@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = CoincapAPI.class)
 public class CoincapAPITest {
 
     private static final String VALID_SYMBOL = "ETH";
